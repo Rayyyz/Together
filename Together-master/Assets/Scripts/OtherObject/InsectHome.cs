@@ -19,11 +19,14 @@ public class InsectHome : MonoBehaviour
     int nums;
     float deltaTime = 4f;
 
+    bool isStart;
+
+
     // Start is called before the first frame update
     void Start()
     {
         applePos = apple.position;
-        StartCoroutine(Generate());
+        // StartCoroutine(Generate());
     }
 
 
@@ -41,20 +44,41 @@ public class InsectHome : MonoBehaviour
         {
             hasApple = false;
         }
+        if (collision.CompareTag("Player"))
+        {
+            if (isStart == false)
+            {
+                StartCoroutine(Generate());
+                isStart = true;
+            }
+        }
     }
 
     IEnumerator Generate()
     {
-        while (nums < 4)
+        if (points.Count == 0)
         {
             Insect ins = Instantiate(Insect).GetComponent<Insect>();
             ins.transform.SetParent(this.transform);
-            ins.transform.localPosition = insectPos.localPosition;
+            ins.transform.localPosition = Vector3.zero;
             ins.insectHome = this;
-            ins.index = nums;
-            nums++;
+            ins.GetComponent<BoxCollider2D>().isTrigger = true;
+            ins.index = -1;
+        }
+        if (points.Count != 0)
+        {
+            while (nums < points.Count)
+            {
+                Insect ins = Instantiate(Insect).GetComponent<Insect>();
+                ins.transform.SetParent(this.transform);
+                ins.transform.localPosition = insectPos.localPosition;
+                ins.insectHome = this;
+                ins.index = nums;
+                nums++;
 
-            yield return new WaitForSeconds(deltaTime);
+                yield return new WaitForSeconds(deltaTime);
+            }
+
         }
     }
 

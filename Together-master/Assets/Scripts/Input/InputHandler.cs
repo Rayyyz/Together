@@ -62,21 +62,21 @@ public class InputHandler : MonoBehaviour
         HorizontalAxis.AxisUpdate();
     }
 
-
-    public void RefreshJumpBuffer()
-    {
-        jumpCounter = 0;
-    }
-    public void RefreshShootBuffer()
-    {
-        shootCounter = 0;
-    }
+    //TODO
+    // public void RefreshJumpBuffer()
+    // {
+    //     jumpCounter = 0;
+    // }
+    // public void RefreshShootBuffer()
+    // {
+    //     shootCounter = 0;
+    // }
 
     void FixedUpdate()
     {
         HorizontalAxis.AxisFiexedUpdate();
 
-        if (JumpButton.Down)
+        if (JumpButton.Held)
         {
             jumpCounter = jumpBuffer;
         }
@@ -84,7 +84,7 @@ public class InputHandler : MonoBehaviour
         {
             jumpCounter--;
         }
-        if (ShootButton.Down)
+        if (ShootButton.Held)
         {
             shootCounter = shootBuffer;
         }

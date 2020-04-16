@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     {
         if (shoot && playerBullet.isActive == false)
         {
-            InputHandler.Instance.RefreshShootBuffer();
+            // InputHandler.Instance.RefreshShootBuffer();
             playerBullet.Spawn();
             animator.SetTrigger("shoot");
             if (GameFacade.Instance.IsStartGame)
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
     {
         if (m_Grounded && jump)
         {
-            InputHandler.Instance.RefreshJumpBuffer();
+            // InputHandler.Instance.RefreshJumpBuffer();
             m_Grounded = false;
             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, m_JumpVelcoity);
         }
