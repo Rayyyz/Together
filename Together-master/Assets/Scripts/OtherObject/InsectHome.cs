@@ -13,9 +13,8 @@ public class InsectHome : MonoBehaviour
     public Transform apple;
     public bool hasApple;
 
-    public List<Transform> points = new List<Transform>();
-    public List<Light2D> light2Ds = new List<Light2D>();
-
+    public List<Transform> points;
+    public List<Light2D> light2Ds;
     int nums;
     float deltaTime = 4f;
 
@@ -28,58 +27,45 @@ public class InsectHome : MonoBehaviour
         applePos = apple.position;
         // StartCoroutine(Generate());
     }
-
-
-    void OnTriggerStay2D(Collider2D collision)
+    void Update()
     {
-        if (collision.CompareTag("Apple"))
+        if (light2Ds[0].enabled && light2Ds[1].enabled && light2Ds[2].enabled && light2Ds[3].enabled)
+        {
+            GameFacade.Instance.NextLevel();
+        }
+
+    }
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Apple"))
         {
             hasApple = true;
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collider)
     {
-        if (collision.CompareTag("Apple"))
+        if (collider.CompareTag("Apple"))
         {
             hasApple = false;
-        }
-        if (collision.CompareTag("Player"))
-        {
-            if (isStart == false)
-            {
-                StartCoroutine(Generate());
-                isStart = true;
-            }
         }
     }
 
     IEnumerator Generate()
     {
-        if (points.Count == 0)
+
+        while (nums < points.Count)
         {
             Insect ins = Instantiate(Insect).GetComponent<Insect>();
             ins.transform.SetParent(this.transform);
-            ins.transform.localPosition = Vector3.zero;
+            ins.transform.localPosition = insectPos.localPosition;
             ins.insectHome = this;
-            ins.GetComponent<BoxCollider2D>().isTrigger = true;
-            ins.index = -1;
-        }
-        if (points.Count != 0)
-        {
-            while (nums < points.Count)
-            {
-                Insect ins = Instantiate(Insect).GetComponent<Insect>();
-                ins.transform.SetParent(this.transform);
-                ins.transform.localPosition = insectPos.localPosition;
-                ins.insectHome = this;
-                ins.index = nums;
-                nums++;
+            ins.index = nums;
+            nums++;
 
-                yield return new WaitForSeconds(deltaTime);
-            }
-
+            yield return new WaitForSeconds(deltaTime);
         }
+
     }
 
     public void ResetApple()

@@ -8,7 +8,7 @@ public class SceneInfo : MonoBehaviour
 {
     public Transform p1;
     public Transform p2;
-
+    public bool isDebug;
     public float intensity;
 
 
@@ -20,8 +20,11 @@ public class SceneInfo : MonoBehaviour
     {
         GameObject p1 = GameObject.Find("Player1");
         GameObject p2 = GameObject.Find("Player2");
-        p1.transform.position = this.p1.position;
-        p2.transform.position = this.p2.position;
+        if (!isDebug)
+        {
+            p1.transform.position = this.p1.position;
+            p2.transform.position = this.p2.position;
+        }
         // p1.GetComponentInChildren<Light2D>().intensity = this.intensity;
         // p2.GetComponentInChildren<Light2D>().intensity = this.intensity;
 

@@ -76,7 +76,6 @@ public class PlayerController : MonoBehaviour
     {
 
         CheckGround();
-
         if (isLocalPlayer)
         {
             Shoot(InputHandler.Instance.Shoot);

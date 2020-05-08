@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Common;
 public class GameFacade : MonoBehaviour
 {
@@ -66,8 +67,37 @@ public class GameFacade : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.M))
         {
-            SceneManager.LoadScene(1);
+            NextLevel();
         }
+    }
+    public void NextLevel()
+    {
+        StartCoroutine(Next());
+    }
+    IEnumerator Next()
+    {
+        // Time.timeScale = 0;
+        Image blackground = GetComponentInChildren<Image>();
+        float timer = 0f;
+        Color color = blackground.color;
+        while (timer < 1.5f)
+        {
+            color.a = Mathf.Lerp(0f, 1f, timer / 1.5f);
+            blackground.color = color;
+            timer += Time.fixedDeltaTime;
+            yield return 0;
+        }
+        SceneManager.LoadScene(1);
+        yield return new WaitForSeconds(1);
+        timer = 0;
+        while (timer < 1.5f)
+        {
+            color.a = Mathf.Lerp(1f, 0f, timer / 1.5f);
+            blackground.color = color;
+            timer += Time.fixedDeltaTime;
+            yield return 0;
+        }
+        // Time.timeScale = 1;
     }
 
     // void OnDestroy()
