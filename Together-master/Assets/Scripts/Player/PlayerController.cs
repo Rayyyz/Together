@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour
 
     #region param
     //public event Action<RaycastHit2D> onControllerCollidedEvent;
-    public event Action<Collider2D> onTriggerEnterEvent;
-    public event Action<Collider2D> onTriggerExitEvent;
+    public event Action<Collider2D> OnInteractionEvent;
 
     public bool isLocalPlayer = false;
 
@@ -54,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
-        onTriggerEnterEvent += (collider2D) =>
+        OnInteractionEvent += (collider2D) =>
         {
             collider2D.GetComponent<IInteractive>()?.Interactive();
         };
@@ -168,8 +167,10 @@ public class PlayerController : MonoBehaviour
 
         if (collision.collider.CompareTag("Death") || collision.collider.CompareTag("Insect"))
         {
-            //TODO 
-            //PlayerManager.Instance.GameOver();
+            this.gameObject.SetActive(false);
+            GameObject.Find("Explosion").transform.position = this.transform.position;
+            GameObject.Find("Explosion").GetComponent<ParticleSystem>().Play();
+            GameFacade.Instance.GameOver();
         }
     }
 
@@ -195,13 +196,10 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider2D)
     {
-        onTriggerEnterEvent?.Invoke(collider2D);
+        OnInteractionEvent?.Invoke(collider2D);
     }
 
-    public void OnTriggerExit2D(Collider2D collider2D)
-    {
-        onTriggerExitEvent?.Invoke(collider2D);
-    }
+
 
     #endregion
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,7 +22,7 @@ public class GameFacade : MonoBehaviour
     //         return _instance;
     //     }
     // }
-
+    public List<SavePoint> savePoints;
     public SavePoint lastSave;
 
     PlayerManager playerMng;
@@ -32,6 +33,8 @@ public class GameFacade : MonoBehaviour
 
     public bool IsStartGame;
     public bool IsConnected;
+
+    public int tempname;
 
 
     void Awake()
@@ -74,31 +77,7 @@ public class GameFacade : MonoBehaviour
     {
         StartCoroutine(Next());
     }
-    IEnumerator Next()
-    {
-        // Time.timeScale = 0;
-        Image blackground = GetComponentInChildren<Image>();
-        float timer = 0f;
-        Color color = blackground.color;
-        while (timer < 1.5f)
-        {
-            color.a = Mathf.Lerp(0f, 1f, timer / 1.5f);
-            blackground.color = color;
-            timer += Time.fixedDeltaTime;
-            yield return 0;
-        }
-        SceneManager.LoadScene(1);
-        yield return new WaitForSeconds(1);
-        timer = 0;
-        while (timer < 1.5f)
-        {
-            color.a = Mathf.Lerp(1f, 0f, timer / 1.5f);
-            blackground.color = color;
-            timer += Time.fixedDeltaTime;
-            yield return 0;
-        }
-        // Time.timeScale = 1;
-    }
+
 
     // void OnDestroy()
     // {
@@ -169,22 +148,76 @@ public class GameFacade : MonoBehaviour
         // GameObject.Destroy(currentRoleGameObject);
         // GameObject.Destroy(playerSyncRequest);
         // GameObject.Destroy(remoteRoleGameObject);
+        StartCoroutine(Over());
     }
+
+
+    IEnumerator Next()
+    {
+        Image blackground = GetComponentInChildren<Image>();
+        float timer = 0f;
+        Color color = blackground.color;
+        while (timer < 1.5f)
+        {
+            color.a = Mathf.Lerp(0f, 1f, timer / 1.5f);
+            blackground.color = color;
+            timer += Time.fixedDeltaTime;
+            yield return 0;
+        }
+        SceneManager.LoadScene(1);
+        yield return new WaitForSeconds(1);
+        timer = 0;
+        while (timer < 1.5f)
+        {
+            color.a = Mathf.Lerp(1f, 0f, timer / 1.5f);
+            blackground.color = color;
+            timer += Time.fixedDeltaTime;
+            yield return 0;
+        }
+    }
+
+    IEnumerator Over()
+    {
+        Image blackground = GetComponentInChildren<Image>();
+        float timer = 0f;
+        Color color = blackground.color;
+        while (timer < 1.5f)
+        {
+            color.a = Mathf.Lerp(0f, 1f, timer / 1.5f);
+            blackground.color = color;
+            timer += Time.fixedDeltaTime;
+            yield return 0;
+        }
+        ResetPlayers();
+        yield return new WaitForSeconds(1);
+        timer = 0;
+        while (timer < 1.5f)
+        {
+            color.a = Mathf.Lerp(1f, 0f, timer / 1.5f);
+            blackground.color = color;
+            timer += Time.fixedDeltaTime;
+            yield return 0;
+        }
+    }
+
 
 
     public void ResetPlayers()
     {
-        //Vector3 v = Vector3.zero;
-        //p1.gameObject.SetActive(false);
-        //p2.gameObject.SetActive(false);
+        //     Vector3 v = Vector3.zero;
+        //     p1.gameObject.SetActive(false);
+        //     p2.gameObject.SetActive(false);
 
-        //p1.transform.position = Vector3.SmoothDamp(p1.transform.position, lastSave.transform.position + lastSave.t1, ref v, 0.6f);
-        //p2.transform.position = Vector3.SmoothDamp(p2.transform.position, lastSave.transform.position + lastSave.t2, ref v, 0.6f);
+        //     p1.transform.position = Vector3.SmoothDamp(p1.transform.position, lastSave.transform.position + lastSave.t1, ref v, 0.6f);
+        //     p2.transform.position = Vector3.SmoothDamp(p2.transform.position, lastSave.transform.position + lastSave.t2, ref v, 0.6f);
 
-        // p1.transform.position = lastSave.transform.position + lastSave.t1;
-        // p2.transform.position = lastSave.transform.position + lastSave.t2;
-        //p1.gameObject.SetActive(true);
-        //p2.gameObject.SetActive(true);
+        playerMng.p1.transform.position = lastSave.transform.position + lastSave.t1;
+        playerMng.p2.transform.position = lastSave.transform.position + lastSave.t2;
+        // playerMng.p1.GetComponent<SpriteRenderer>().enabled = true;
+        // playerMng.p2.GetComponent<SpriteRenderer>().enabled = true;
+        playerMng.p1.gameObject.SetActive(true);
+        playerMng.p2.gameObject.SetActive(true);
+
     }
 
 }

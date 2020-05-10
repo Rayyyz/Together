@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
 
-public class PointLight : MonoBehaviour, ILight2D
+public class PointLight : MonoBehaviour, ILight2D, IInteractive
 {
     public SpriteRenderer lightedSprite;
     public SpriteRenderer unlightedSprite;

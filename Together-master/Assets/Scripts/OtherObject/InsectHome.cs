@@ -35,6 +35,18 @@ public class InsectHome : MonoBehaviour
         }
 
     }
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player") && isStart == false)
+        {
+            isStart = true;
+            StartCoroutine(Generate());
+
+        }
+
+    }
+
+
     void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.CompareTag("Apple"))

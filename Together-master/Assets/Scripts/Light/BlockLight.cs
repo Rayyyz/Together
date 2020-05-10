@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
 
-public class BlockLight : MonoBehaviour, ILight2D
+public class BlockLight : MonoBehaviour, ILight2D, IInteractive
 {
     public Transform rotatPivot;
     Light2D light2D;
