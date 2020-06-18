@@ -97,17 +97,15 @@ public class Insect : MonoBehaviour
     {
         Light2D appleLight = insectHome.apple.GetComponent<Light2D>();
 
-        while (Vector3.Distance(this.transform.position, insectHome.apple.position) > 0.5f
-            && insectHome.hasApple)
+        while (insectHome.hasApple)
         {
+            this.GetComponent<Collider2D>().enabled = false;
             this.transform.position = Vector3.MoveTowards(transform.position, insectHome.apple.position, speed * Time.deltaTime);
+            //appleLight.intensity -= 0.3f * Time.deltaTime;
             yield return 0;
         }
-        while (insectHome.hasApple && appleLight.intensity > 1)
-        {
-            appleLight.intensity -= 3f * Time.deltaTime;
-            yield return 0;
-        }
+        this.GetComponent<Collider2D>().enabled = true;
+
 
         status = InsectStatus.Idle;
         if (index != -1)

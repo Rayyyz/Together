@@ -26,6 +26,11 @@ public class SavePoint : MonoBehaviour, IInteractive
         }
     }
 
+    private void Start()
+    {
+        this.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
     public void Interactive()
     {
         if (this.index > GameFacade.Instance.lastSave.index)

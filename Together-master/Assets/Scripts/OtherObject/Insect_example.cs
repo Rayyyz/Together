@@ -10,7 +10,9 @@ public class Insect_example : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
+            this.GetComponent<Animator>().enabled = true;
             StartCoroutine(Generate());
+            this.GetComponent<Collider2D>().enabled = false;
         }
 
     }
@@ -25,6 +27,8 @@ public class Insect_example : MonoBehaviour
             timer += Time.fixedDeltaTime;
             yield return 0;
         }
+        this.GetComponent<Animator>().enabled = false;
+
 
     }
 

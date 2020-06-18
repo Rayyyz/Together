@@ -8,15 +8,20 @@ public class ReflectionBlock : MonoBehaviour
     bool isIn;
     public Transform block;
 
-    public Camera camera;
+    private Camera cCamera;
+
+    private void Start()
+    {
+        cCamera = Camera.main;
+    }
 
     void OnTriggerEnter2D(Collider2D collider2D)
     {
         if (++GameFacade.Instance.tempname > 0)
         {
-            camera.GetComponent<CinemachineBrain>().enabled = false;
-            camera.transform.position = new Vector3(6.5f, -3.3f, -10f);
-            camera.orthographicSize = 10f;
+            cCamera.GetComponent<CinemachineBrain>().enabled = false;
+            cCamera.transform.position = new Vector3(6.5f, -3.3f, -10f);
+            cCamera.orthographicSize = 10f;
         }
 
     }
@@ -24,23 +29,23 @@ public class ReflectionBlock : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            block.transform.Rotate(0, 0, 2f * Time.deltaTime);
+            block.transform.Rotate(0, 0, 3f * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            block.transform.Rotate(0, 0, -2f * Time.deltaTime);
+            block.transform.Rotate(0, 0, -3f * Time.deltaTime);
         }
 
-        camera.GetComponent<CinemachineBrain>().enabled = false;
-        camera.transform.position = new Vector3(6.5f, -3.3f, -10f);
-        camera.orthographicSize = 10f;
+        cCamera.GetComponent<CinemachineBrain>().enabled = false;
+        cCamera.transform.position = new Vector3(6.5f, -3.3f, -10f);
+        cCamera.orthographicSize = 10f;
     }
 
     void OnTriggerExit2D(Collider2D collider2D)
     {
         if (--GameFacade.Instance.tempname == 0)
         {
-            camera.GetComponent<CinemachineBrain>().enabled = true;
+            cCamera.GetComponent<CinemachineBrain>().enabled = true;
         }
     }
 

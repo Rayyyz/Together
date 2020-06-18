@@ -45,7 +45,7 @@ public class GameFacade : MonoBehaviour
         playerMng = new PlayerManager(this);//要在最后
         DontDestroyOnLoad(this.gameObject);
 
-        Screen.SetResolution(640, 480, false);
+        //Screen.SetResolution(640, 480, false);
     }
 
     /// <summary>
